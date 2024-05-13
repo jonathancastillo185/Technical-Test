@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 import requests
 
 
+import datetime
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -35,14 +36,30 @@ def inicio_driver():
 
     return driver
     
-    
-def print_process(texto):
+
+def print_process(fin=False, *texto):
     terminal_width, _ = shutil.get_terminal_size()  # Obtener el ancho del terminal
     longitud_total = terminal_width - 2  # Longitud total de la línea (restando el espacio para los bordes)
-    espacio_alrededor = (longitud_total - len(texto)) // 2  # Espacio alrededor del texto
+
+    # Unir los argumentos variables en un solo string
+    texto_unido = ' '.join(texto)
+
+    # Calcular el espacio alrededor del texto
+    espacio_alrededor = (longitud_total - len(texto_unido)) // 2
 
     # Imprimir la línea con el texto centrado
-    print("|" + "-" * espacio_alrededor + texto + "-" * espacio_alrededor + "|")
+    print("|" + "-" * espacio_alrededor + texto_unido + "-" * espacio_alrededor + "|")
+
+    if fin:
+        ahora = datetime.datetime.now()
+        with open("registro.txt", "a") as f:
+            f.write(f"{ahora.strftime('%d/%m/%Y %H:%M:%S')} {'-' * 20 + 'Fin del script' + '-' * 20 }\n")
+    else:
+        # Escribir en el archivo de registro
+        ahora = datetime.datetime.now()
+        with open("registro.txt", "a") as f:
+            f.write(f"{ahora.strftime('%d/%m/%Y %H:%M:%S')} - {texto_unido}\n")
+
 
 
 def categories():    
@@ -195,8 +212,7 @@ def movies(url):
     except Exception as e:
         print("Se produjo un error durante la solicitud o el análisis de la página:", e)
 
-
-def search(soup,*arg):
+def search(soup, *arg , image = False):
     """
         Primero ingresar componente de bs4 a analizar.
         luego Ingresar los valores a buscar anidados de la siguiente manera
@@ -204,23 +220,31 @@ def search(soup,*arg):
         segundo componente : "p/class"
         y asi sucesivamente.
     """
-    lista = [x.split("/") for x in arg]
-    
-    alm = soup
-    
-    for x in lista:
+    if image:
+        
+        alm = str(soup)
+        
+        pattern = re.compile(r'url("h(.*?)\-");')
 
-        alm = alm.find(x[0], class_=x[1])
+        match = pattern.search(alm)
+        
+        return match
     
-    return alm.text
-    
-def get_images(soup,*arg):
-    
-    
+    else:
+        
+        lista = [x.split("/") for x in arg]
+
+        alm = soup
+        
+        for x in lista:
+
+            alm = alm.find(x[0], class_=x[1])
+        
+        return alm.text
 
 
 def movies(url):
-    for _ in range(2):  # Intentar dos veces
+    for _ in range(4):  # Cantidad de intentos antes de devolver error
         try:
             # Realizar la solicitud GET a la página web
             response = requests.get(url)
@@ -240,7 +264,7 @@ def movies(url):
                     try:
                         diccionario_extraccion["titulo"] = soup.find(class_="fw-bold title").text
                         diccionario_extraccion["idioma"] = search(soup,"div/audio fs-15 label margin-bottom-30","p/d-inline-block")
-                        diccionario_extraccion["subtitulos"] = search(soup,"div/subtitle fs-15 label", "p/fw-bold")
+                        diccionario_extraccion["subtitulos"] = search(soup,"div/subtitle fs-15 label", "span/")
                         diccionario_extraccion["ano"] = soup.find(class_="year").text
                         diccionario_extraccion["duracion_minutos"] = soup.find(class_="duration").text
                         diccionario_extraccion["categorias"] = soup.find(class_="category").text
@@ -269,5 +293,6 @@ def movies(url):
         except Exception as e:
             print(f"Se produjo un error durante el intento {_+1} de la solicitud o el análisis de la página {url}: {e}")
 
-    # Si todas las iteraciones fallan, retornar None
     return None
+
+
