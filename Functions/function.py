@@ -136,7 +136,7 @@ def movies_for_category(category):
             
             fin = time.time()
             
-            print_process(f"Todas las peliculas de la categoria '{category}' capturadas correctamente, demoro {round((fin-comienzo),2)} segundos")
+            print_process(f"Todo el contenido de la categoria '{category}' fue capturado correctamente, demoro {round((fin-comienzo),2)} segundos")
             
             return titulos
 
@@ -191,6 +191,83 @@ def movies(url):
             return diccionario_extraccion
         
         else:
-            print("Error al cargar la página:", response.status_code)
+            print(f"Error al cargar la url {url} :", response.status_code)
     except Exception as e:
         print("Se produjo un error durante la solicitud o el análisis de la página:", e)
+
+
+def search(soup,*arg):
+    """
+        Primero ingresar componente de bs4 a analizar.
+        luego Ingresar los valores a buscar anidados de la siguiente manera
+        primer componente : "div/class"
+        segundo componente : "p/class"
+        y asi sucesivamente.
+    """
+    lista = [x.split("/") for x in arg]
+    
+    alm = soup
+    
+    for x in lista:
+
+        alm = alm.find(x[0], class_=x[1])
+    
+    return alm.text
+    
+def get_images(soup,*arg):
+    
+    
+
+
+def movies(url):
+    for _ in range(2):  # Intentar dos veces
+        try:
+            # Realizar la solicitud GET a la página web
+            response = requests.get(url)
+
+            # Verificar si la solicitud fue exitosa (código de estado 200)
+            if response.status_code == 200:
+                # Obtener el contenido HTML de la página
+                html_content = response.content
+
+                # Crear un objeto BeautifulSoup
+                soup = BeautifulSoup(html_content, "html.parser")
+
+                # Crear un diccionario para almacenar los datos
+                diccionario_extraccion = {}
+
+                try:
+                    try:
+                        diccionario_extraccion["titulo"] = soup.find(class_="fw-bold title").text
+                        diccionario_extraccion["idioma"] = search(soup,"div/audio fs-15 label margin-bottom-30","p/d-inline-block")
+                        diccionario_extraccion["subtitulos"] = search(soup,"div/subtitle fs-15 label", "p/fw-bold")
+                        diccionario_extraccion["ano"] = soup.find(class_="year").text
+                        diccionario_extraccion["duracion_minutos"] = soup.find(class_="duration").text
+                        diccionario_extraccion["categorias"] = soup.find(class_="category").text
+                        diccionario_extraccion["sinopsis"] = soup.find(class_="fs-18").text
+                        diccionario_extraccion["tipo"] = "Pelicula"
+                        diccionario_extraccion["link"] = url
+                    except:
+                        diccionario_extraccion["titulo"] = soup.find(class_="fw-bold title").text
+                        diccionario_extraccion["idioma"] = search(soup,"div/audio fs-15 label margin-bottom-30","p/d-inline-block")
+                        diccionario_extraccion["subtitulos"] = search(soup,"div/subtitle fs-15 label", "p/fw-bold")
+                        diccionario_extraccion["ano"] = soup.find(class_="year").text
+                        diccionario_extraccion["duracion_minutos"] = "0 min"
+                        diccionario_extraccion["categorias"] = soup.find(class_="category").text
+                        diccionario_extraccion["sinopsis"] = soup.find(class_="fs-18").text
+                        diccionario_extraccion["tipo"] = "Serie"
+                        diccionario_extraccion["link"] = url
+                except Exception as e:
+                    # Si hay algún error al extraer los datos, imprimir el error y continuar con la siguiente iteración
+                    print(f"Error al extraer los datos de la url {url} en el intento {_+1}: {e}")
+                    continue
+                
+                return diccionario_extraccion
+
+            else:
+                print(f"Error al cargar la url {url} en el intento {_+1}: {response.status_code}")
+        except Exception as e:
+            print(f"Se produjo un error durante el intento {_+1} de la solicitud o el análisis de la página {url}: {e}")
+
+    # Si todas las iteraciones fallan, retornar None
+    return None

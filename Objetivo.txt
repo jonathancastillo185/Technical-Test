@@ -13,7 +13,7 @@ Paso a detallar los puntos de la prueba técnica:
         Episodios de cada serie.
         Metadata de los episodios.
         Si es posible obtener mas información/metadata por cada contenido.
-        Identificar modelo de negocio.
+        Identificar modelo de negocio. - el modelo es "modelo de subscripcion"
         Tiempo de ejecución menor a 2hs.
         Analisis y/o limpieza de Metadata.
         Otros que consideren relevante.
