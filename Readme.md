@@ -58,16 +58,41 @@ El objetivo de esta prueba técnica es obtener todas las películas y series, in
 - Se proporciona un [Jupyter Notebook](/Notebook/Scraping.ipynb) en la carpeta llamada Notebook con los pasos realizados y ejemplos de procesos para validar la veracidad de los resultados.
 - El script principal que orquesta la obtención y procesamiento de la información se encuentra en la carpeta script el archivo llamado ["Scraping.py"](/Script/Scraping.py). Las funciones utilizadas en el proceso ETL están almacenadas en la carpeta Functions el archivo llamado ["Function.py"](/Functions/function.py).
 
+
 ### Bases de datos:
 
 A continuacion se adjuntan 2 capturas de pantalla de como se visualiza la informacion extraida de ambos tipos.
 
-#### Peliculas
+<center><h2>Peliculas</h2></center>
 <center>
 <img src="/images/Peliculas.png" alt="Imagen de películas">
 </center>
 
-#### Series
+<center><h2>Peliculas Dummies</h2></center>
 <center>
-<img src="/images/Peliculas.png" alt="Imagen de películas">
+<img src="/images/Peliculas_dummies.png" alt="Imagen de películas">
 </center>
+
+<center><h2>Series</h2></center>
+<center>
+<img src="/images/Series.png" alt="Imagen de películas">
+</center>
+
+<center><h2>Series meta</h2></center>
+<center>
+<img src="/images/Series_meta.png" alt="Imagen de películas">
+</center>
+
+<center><h2>Series completo</h2></center>
+<center>
+<img src="/images/series_completo.png" alt="Imagen de películas">
+</center>
+
+<center><h2>Video demostracion de ejecucion del Script</h2></center>
+
+<center>
+<video width="560" height="315" controls>
+  <source src="/video/demostracion.mkv" type="video/x-matroska">
+  Tu navegador no soporta la reproducción de video.
+</video>
+<center>
