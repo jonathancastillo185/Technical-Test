@@ -34,7 +34,7 @@ def inicio_driver():
     opts.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
     
     # En caso de querer ver el proceso con la ventana del navegador comentar la siguiente linea
-    # opts.add_argument("--headless")
+    opts.add_argument("--headless")
     
     driver = webdriver.Chrome(
     service=Service(ChromeDriverManager().install()),
@@ -250,7 +250,7 @@ def movies(url):
                     except:
                         diccionario_extraccion["titulo"] = soup.find(class_="fw-bold title").text
                         diccionario_extraccion["idioma"] = search(soup,"div/audio fs-15 label margin-bottom-30","p/d-inline-block")
-                        diccionario_extraccion["subtitulos"] = search(soup,"div/subtitle fs-15 label", "p/fw-bold")
+                        diccionario_extraccion["subtitulos"] = search(soup,"div/subtitle fs-15 label", "span/")
                         diccionario_extraccion["ano"] = soup.find(class_="year").text
                         diccionario_extraccion["duracion_minutos"] = "0 min"
                         diccionario_extraccion["categorias"] = soup.find(class_="category").text
@@ -338,7 +338,6 @@ def capitulo_click(driver, div):
         return False
 
 
-
 def series_informacion(url):    
     """
     Esta función extrae información sobre las temporadas y capítulos de una serie desde la URL proporcionada.
@@ -350,94 +349,117 @@ def series_informacion(url):
     dict: Un diccionario con la información de la serie.
     """
     intentos = 3  # Número de intentos
-    espera_1 = 2  # Tiempo de espera máximo en segundos
+    espera_1 = 3  # Tiempo de espera máximo en segundos
     serie = {}   # Diccionario para almacenar la información de la serie
+        
+    try:
+        comienzo = time.time()
 
-    for intento in range(intentos):
-        try:
-            comienzo = time.time()
-
-            driver = inicio_driver()
-            driver.get(url)
-
-            titulo = driver.find_element(By.XPATH, "/html/body/main/div/div/div[2]/div/div[2]/h1").text
-            
-            serie = {"titulo" : titulo, "temporada" : [], "capitulos" : []}
-
-            button = WebDriverWait(driver, espera_1).until(
-                EC.presence_of_element_located((By.CLASS_NAME, "btn.select-trigger.text-white.bg-transparent.fs-16"))
-            )
-            
-            button.click()
-
-            menu_temporadas = WebDriverWait(driver, espera_1).until(
-                EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".btn.fs-15.block.text-white > span"))
-            )
-            
-            cant_temporadas = [x.text for x in menu_temporadas]
-            
-            button.click()
-            cont_1 = 1
-            
-            for temporada in cant_temporadas:
-                try:
-                    bloque_1 = season_click(driver, cont_1)
-                    
-                    if bloque_1 == True:
-                        capitulos_temporada = WebDriverWait(driver, espera_1).until(
-                            EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".episode-title.fs-16.fw-bold"))
-                        )
-                        capitulos_temporada = [x.text for x in capitulos_temporada]
-
-                        alm = {"capitulo" : [], "sinopsis" : [], "duracion_minutos" : []}
-                        
-                        cont_2 = 1
-
-                        for capitulo in capitulos_temporada:
-                            try:
-                                bloque_2 = capitulo_click(driver, cont_2)
-                                
-                                if bloque_2 == True:
-                                    
-                                    sinopsis = driver.find_element(By.XPATH, "/html/body/main/div/div/div[3]/div[2]/div[2]/div[3]/div/div[1]/p[2]").text
-                                    duracion = driver.find_element(By.XPATH, "/html/body/main/div/div/div[2]/div/div[2]/div/p/span[3]").text
-
-                                    # alm.append({"capitulo": capitulo, "sinopsis": sinopsis, "duracion_minutos": int(duracion.replace(" min",""))})
-                                    
-                                    alm["capitulo"].append(capitulo)
-                                    alm["sinopsis"].append(sinopsis)
-                                    alm["duracion_minutos"].append(int(duracion.replace(" min","")))
-                                    
-                                else:
-                                    break
-                                cont_2 += 1
-                                
-                            except (TimeoutException, NoSuchElementException) as e:
-                                print(f"No se pudo obtener información del capítulo {capitulo}: {e}")
-
-                        
-                        serie["temporada"].append(temporada)
-                        serie["capitulos"].append(alm)
-                    else:
-                        break
-                    cont_1 += 1
-                except TimeoutException as e:
-                    print(f"No se pudo obtener información de la temporada {temporada}: {e}")
-
-            driver.quit()
-
-            tiempo_total = time.time() - comienzo
-            print(f"Tiempo total: {tiempo_total} segundos")
-
-            # return serie
-
-            return serie["titulo"],serie["temporada"],serie["capitulos"]
-
-        except TimeoutException as e:
-            print(f"Se agotó el tiempo de espera: {e}")
-            if intento < intentos - 1:
+        driver = inicio_driver()
+        
+        # Intentamos obtener la página hasta 3 veces
+        for _ in range(intentos):
+            try:
+                driver.get(url)
+                time.sleep(3)
+                break
+            except WebDriverException as e:
+                print(f"Error al cargar la página: {e}")
                 print("Intentando nuevamente...")
-                continue
-            else:
-                print("Se alcanzó el número máximo de intentos.")
-                return None
+
+        titulo = driver.find_element(By.XPATH, "/html/body/main/div/div/div[2]/div/div[2]/h1").text
+        
+        serie = {"titulo" : [], "temporada" : [], "capitulos" : [], "sinopsis" : [], "duracion_minutos" : []}
+
+        button = WebDriverWait(driver, espera_1).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "btn.select-trigger.text-white.bg-transparent.fs-16"))
+        )
+        
+        button.click()
+
+        menu_temporadas = WebDriverWait(driver, espera_1).until(
+            EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".btn.fs-15.block.text-white > span"))
+        )
+        
+        cant_temporadas = [x.text for x in menu_temporadas]
+        
+        button.click()
+        cont_1 = 1
+        
+        for temporada in cant_temporadas:
+            try:
+                bloque_1 = season_click(driver, cont_1)
+                
+                if bloque_1 == True:
+                    capitulos_temporada = WebDriverWait(driver, espera_1).until(
+                        EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".episode-title.fs-16.fw-bold"))
+                    )
+                    capitulos_temporada = [x.text for x in capitulos_temporada]
+
+                    alm = {"titulo" : [],"temporada" : [],"capitulo" : [], "sinopsis" : [], "duracion_minutos" : []}
+                    
+                    cont_2 = 1
+
+                    for capitulo in capitulos_temporada:
+                        try:
+                            bloque_2 = capitulo_click(driver, cont_2)
+                            
+                            if bloque_2 == True:
+                                
+                                sinopsis = driver.find_element(By.XPATH, "/html/body/main/div/div/div[3]/div[2]/div[2]/div[3]/div/div[1]/p[2]").text
+                                duracion = driver.find_element(By.XPATH, "/html/body/main/div/div/div[2]/div/div[2]/div/p/span[3]").text
+
+                                alm["titulo"].append(titulo)
+                                alm["temporada"].append(temporada)
+                                alm["capitulo"].append(capitulo)
+                                alm["sinopsis"].append(sinopsis)
+                                alm["duracion_minutos"].append(int(duracion.replace(" min","")))
+                                
+                            else:
+                                break
+                            cont_2 += 1
+                            
+                        except (TimeoutException, NoSuchElementException) as e:
+                            print(f"No se pudo obtener información del capítulo {capitulo}: {e}")
+
+                    serie["titulo"].append(alm["titulo"])
+                    serie["temporada"].append(alm["temporada"])
+                    serie["capitulos"].append(alm["capitulo"])
+                    serie["sinopsis"].append(alm["sinopsis"])
+                    serie["duracion_minutos"].append(alm["duracion_minutos"])
+                else:
+                    break
+                cont_1 += 1
+            except TimeoutException as e:
+                print(f"No se pudo obtener información de la temporada {temporada}: {e}")
+
+        driver.quit()
+
+        tiempo_total = time.time() - comienzo
+        print(f"Tiempo total de {titulo}: {round(tiempo_total,2)} segundos")
+
+        return serie["titulo"], serie["temporada"], serie["capitulos"], serie["sinopsis"], serie["duracion_minutos"]
+
+    except TimeoutException as e:
+        
+        driver.quit()
+        
+        return f"Error de procesamiento {url}"
+    
+    
+
+
+def union_lista(lista):
+    alm = []
+    for x in lista:
+        for i in x:
+            for l in i:
+                alm.append(l)
+    return alm
+
+def desempaquetado(df):
+    total_informacion = {}
+
+    for x in df.keys():
+        total_informacion[x] = union_lista(df[x])
+    return total_informacion

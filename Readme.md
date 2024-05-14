@@ -1,4 +1,4 @@
-# Prueba Técnica
+<center><h1>Prueba Técnica</h1></center>
 
 ## Objetivo
 
@@ -53,11 +53,21 @@ El objetivo de esta prueba técnica es obtener todas las películas y series, in
 
 ## Resultados
 
-- El script produce dos bases de datos, una correspondiente a películas y otra a series.
-- Se registra el tiempo de ejecución de cada ejecución del script en el archivo "registro.txt".
-- Se proporciona un notebook Jupyter en la carpeta "Notebook" con los pasos realizados y ejemplos de procesos para validar la veracidad de los resultados.
-- El script principal que orquesta la obtención y procesamiento de la información se encuentra en la carpeta "Script". Las funciones utilizadas en el proceso ETL están almacenadas en la carpeta "Functions".
+- El script produce dos bases de datos, una correspondiente a [películas](/Bases_datos/Peliculas.csv) y otra a [series](/Bases_datos/Peliculas.csv).
+- Se registra el tiempo de ejecución de cada ejecución del script en el archivo ["registro.txt"](/registro.txt) .
+- Se proporciona un [Jupyter Notebook](/Notebook/Scraping.ipynb) en la carpeta llamada Notebook con los pasos realizados y ejemplos de procesos para validar la veracidad de los resultados.
+- El script principal que orquesta la obtención y procesamiento de la información se encuentra en la carpeta script el archivo llamado ["Scraping.py"](/Script/Scraping.py). Las funciones utilizadas en el proceso ETL están almacenadas en la carpeta Functions el archivo llamado ["Function.py"](/Functions/function.py).
 
 ### Bases de datos:
 
-![Alt text](/image/Peliculas.jpg)
+A continuacion se adjuntan 2 capturas de pantalla de como se visualiza la informacion extraida de ambos tipos.
+
+#### Peliculas
+<center>
+<img src="/images/Peliculas.png" alt="Imagen de películas">
+</center>
+
+#### Series
+<center>
+<img src="/images/Peliculas.png" alt="Imagen de películas">
+</center>
