@@ -57,7 +57,7 @@ El objetivo de esta prueba técnica es obtener todas las películas y series, in
 - Se registra el tiempo de ejecución de cada ejecución del script en el archivo ["registro.txt"](/registro.txt) .
 - Se proporciona un [Jupyter Notebook](/Notebook/Scraping.ipynb) en la carpeta llamada Notebook con los pasos realizados y ejemplos de procesos para validar la veracidad de los resultados.
 - El script principal que orquesta la obtención y procesamiento de la información se encuentra en la carpeta script el archivo llamado ["Scraping.py"](/Script/Scraping.py). Las funciones utilizadas en el proceso ETL están almacenadas en la carpeta Functions el archivo llamado ["Function.py"](/Functions/function.py).
-
+- En la extraccion si un request falla se reintenta las veces establecidas antes de devolver un error, esto se ve reflejado en impresiones de pantalla por medio de la terminal.
 
 ### Bases de datos:
 
