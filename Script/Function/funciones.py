@@ -34,7 +34,7 @@ def inicio_driver():
     opts.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
     
     # En caso de querer ver el proceso con la ventana del navegador comentar la siguiente linea
-    #opts.add_argument("--headless")
+    opts.add_argument("--headless")
     
     driver = webdriver.Chrome(
     service=Service(ChromeDriverManager().install()),
@@ -354,9 +354,6 @@ def series_informacion(url):
                 print(f"Error al cargar la página: {e}")
                 print("Intentando nuevamente...")
 
-        WebDriverWait(driver, espera).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "p.title"))
-            )
         
         titulo = driver.find_element(By.XPATH, "/html/body/main/div/div/div[2]/div/div[2]/h1").text
         

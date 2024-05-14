@@ -112,6 +112,8 @@ if __name__ == "__main__":
     series.to_csv("{}series.csv".format(ruta_base),index=False)
     print_process("Base de datos Series.csv se exporto correctamente")
 
+    time.sleep(10)
+
     print_process("Comenzamos extraccion de metadata series")
     # Comenzamos con el proceso de captura de informacion de cada serie
     links_series = list(series["link"].values)
@@ -147,6 +149,6 @@ if __name__ == "__main__":
 
     series_todo.to_csv("{}series_completo.csv".format(ruta_base), index = False)
 
-    print_process(f"El script completo tubo una demora de {round((time.time()-comienzo_script),2)} minutos")
+    print_process(f"El script completo tubo una demora de {round((time.time()-comienzo_script)/60,2)} minutos")
 
-    print_process(fin=False)
+    print_process("",fin=False)
