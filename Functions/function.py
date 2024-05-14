@@ -16,6 +16,12 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+
 # -------------- PARAMETROS
 
 espera = 10
@@ -28,7 +34,7 @@ def inicio_driver():
     opts.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
     
     # En caso de querer ver el proceso con la ventana del navegador comentar la siguiente linea
-    opts.add_argument("--headless")
+    # opts.add_argument("--headless")
     
     driver = webdriver.Chrome(
     service=Service(ChromeDriverManager().install()),
@@ -37,29 +43,31 @@ def inicio_driver():
     return driver
     
 
-def print_process(fin=False, *texto):
-    terminal_width, _ = shutil.get_terminal_size()  # Obtener el ancho del terminal
-    longitud_total = terminal_width - 2  # Longitud total de la línea (restando el espacio para los bordes)
+def print_process(texto,fin=True):
+    """
+    Con esta función imprimimos en terminal el proceso centrado con su duración,
+    además de generar y agregar a un archivo de tipo texto (llamado registro.txt)
+    el registro de su ejecución paso a paso con horario y duración de procesos.
+    
+    Args:
+        *texto (str): Texto a imprimir.
+        fin (bool): Indica si es el fin del proceso o no (por defecto es True).
+    """
+    
+    terminal_width, _ = shutil.get_terminal_size() 
+    longitud_total = terminal_width - 2 
+    espacio_alrededor = (longitud_total - len(texto)) // 2
 
-    # Unir los argumentos variables en un solo string
-    texto_unido = ' '.join(texto)
-
-    # Calcular el espacio alrededor del texto
-    espacio_alrededor = (longitud_total - len(texto_unido)) // 2
-
-    # Imprimir la línea con el texto centrado
-    print("|" + "-" * espacio_alrededor + texto_unido + "-" * espacio_alrededor + "|")
+    print("|" + "-" * espacio_alrededor + texto + "-" * espacio_alrededor + "|")
 
     if fin:
         ahora = datetime.datetime.now()
         with open("registro.txt", "a") as f:
-            f.write(f"{ahora.strftime('%d/%m/%Y %H:%M:%S')} {'-' * 20 + 'Fin del script' + '-' * 20 }\n")
+            f.write(f"{ahora.strftime('%d/%m/%Y %H:%M:%S')} - {texto}\n")
     else:
-        # Escribir en el archivo de registro
         ahora = datetime.datetime.now()
         with open("registro.txt", "a") as f:
-            f.write(f"{ahora.strftime('%d/%m/%Y %H:%M:%S')} - {texto_unido}\n")
-
+            f.write(f"{ahora.strftime('%d/%m/%Y %H:%M:%S')} - {'-' * 20 + ' Fin del script ' + '-' * 20}\n")
 
 
 def categories():    
@@ -101,7 +109,7 @@ def categories():
 
 def get_titles(driver):
     """
-    Función auxiliar para obtener los títulos de una página web.
+        Obtiene los titulos de la pagina.
     """
     links_element = driver.find_elements(By.CSS_SELECTOR, "a")
 
@@ -114,6 +122,9 @@ def movies_for_category(category):
     """
     Ingresa una categoría y esta función dirigirá a la URL específica de esta categoría 
     y devolverá la cantidad de títulos dentro de la misma.
+    
+    Args:
+    Str: nombre de la categoria
     """
     comienzo = time.time()
     intentos = 5
@@ -171,51 +182,12 @@ def movies_for_category(category):
             driver.quit()
             
             
-def movies(url):
-    try:
-        # Realizar la solicitud GET a la página web
-        response = requests.get(url)
-
-        # Verificar si la solicitud fue exitosa (código de estado 200)
-        if response.status_code == 200:
-            # Obtener el contenido HTML de la página
-            html_content = response.content
-
-            # Crear un objeto BeautifulSoup
-            soup = BeautifulSoup(html_content, "html.parser")
-            
-            diccionario_extraccion = {}
-            
-            try:
-                diccionario_extraccion["titulo"] = soup.find(class_="fw-bold title").text
-                diccionario_extraccion["ano"] = soup.find(class_="year").text
-                diccionario_extraccion["duracion"] = soup.find(class_="duration").text
-                diccionario_extraccion["categorias"] = soup.find(class_="category").text
-                diccionario_extraccion["descripcion"] = soup.find(class_="fs-18").text
-                diccionario_extraccion["tipo"] = "Pelicula"
-                diccionario_extraccion["link"] = url
-
-                
-            except:
-                diccionario_extraccion["titulo"] = soup.find(class_="fw-bold title").text
-                diccionario_extraccion["ano"] = soup.find(class_="year").text
-                diccionario_extraccion["duracion"] = "0 min"
-                diccionario_extraccion["categorias"] = soup.find(class_="category").text
-                diccionario_extraccion["descripcion"] = soup.find(class_="fs-18").text
-                diccionario_extraccion["tipo"] = "Serie"
-                diccionario_extraccion["link"] = url
-                
-            return diccionario_extraccion
-        
-        else:
-            print(f"Error al cargar la url {url} :", response.status_code)
-    except Exception as e:
-        print("Se produjo un error durante la solicitud o el análisis de la página:", e)
-
 def search(soup, *arg , image = False):
     """
         Primero ingresar componente de bs4 a analizar.
-        luego Ingresar los valores a buscar anidados de la siguiente manera
+        luego Ingresar los valores a buscar anidados.
+        
+        Args:
         primer componente : "div/class"
         segundo componente : "p/class"
         y asi sucesivamente.
@@ -244,20 +216,24 @@ def search(soup, *arg , image = False):
 
 
 def movies(url):
+    """
+    Esta función busca información sobre películas o series en una página web.
+
+    Args:
+    url (str): La URL de la página web que contiene la información de la película o serie.
+
+    Returns:
+    dict or None: Un diccionario con la información de la película o serie si se encuentra, o None si hay algún error.
+    """
     for _ in range(4):  # Cantidad de intentos antes de devolver error
         try:
-            # Realizar la solicitud GET a la página web
             response = requests.get(url)
 
-            # Verificar si la solicitud fue exitosa (código de estado 200)
             if response.status_code == 200:
-                # Obtener el contenido HTML de la página
                 html_content = response.content
 
-                # Crear un objeto BeautifulSoup
                 soup = BeautifulSoup(html_content, "html.parser")
 
-                # Crear un diccionario para almacenar los datos
                 diccionario_extraccion = {}
 
                 try:
@@ -296,3 +272,172 @@ def movies(url):
     return None
 
 
+def generador_dummies(df):
+    """
+    Esta función convierte las categorías en columnas binarias (dummies).
+
+    Args:
+    df (DataFrame): El DataFrame de pandas con una columna llamada 'categorias' que contiene listas de categorías.
+
+    Returns:
+    DataFrame: El DataFrame modificado con las columnas de categorías binarias.
+    """
+    df['categorias'] = df['categorias'].str.split(', ')
+
+    all_categories = set([cat for sublist in df['categorias'].tolist() for cat in sublist])
+
+    for category in all_categories:
+        df[category] = df['categorias'].apply(lambda x: 1 if category in x else 0)
+
+    df.drop(columns=['categorias'], inplace=True)
+
+    return df
+
+
+
+
+def season_click(driver, div):
+    """
+    Esta función hace clic en una temporada específica.
+
+    Args:
+    driver: El controlador del navegador.
+    texto (str): El texto de la temporada en la que se hará clic.
+    """
+    try:
+        season = driver.find_element(By.XPATH, f"/html/body/main/div/div/div[3]/div[2]/div[2]/div[1]/button")
+        
+        season.click()
+        
+        time.sleep(2)
+        
+        season_num = driver.find_element(By.XPATH, f"/html/body/main/div/div/div[3]/div[2]/div[2]/div[1]/div/button[{div}]")
+        
+        season_num.click()
+        
+        return True
+    except:
+        return False
+
+
+def capitulo_click(driver, div):
+    """
+    Esta función hace clic en un elemento con el texto especificado.
+
+    Args:
+    driver: El controlador del navegador.
+    texto (str): El texto del elemento en el que se hará clic.
+    """
+    try:
+        capitulo = driver.find_element(By.XPATH, f"/html/body/main/div/div/div[3]/div[2]/div[2]/div[2]/div/div/div[{div}]/p")
+        
+        capitulo.click()
+        
+        return True
+    except:
+        return False
+
+
+
+def series_informacion(url):    
+    """
+    Esta función extrae información sobre las temporadas y capítulos de una serie desde la URL proporcionada.
+    
+    Args:
+    url (str): La URL de la serie en la página web.
+
+    Returns:
+    dict: Un diccionario con la información de la serie.
+    """
+    intentos = 3  # Número de intentos
+    espera_1 = 2  # Tiempo de espera máximo en segundos
+    serie = {}   # Diccionario para almacenar la información de la serie
+
+    for intento in range(intentos):
+        try:
+            comienzo = time.time()
+
+            driver = inicio_driver()
+            driver.get(url)
+
+            titulo = driver.find_element(By.XPATH, "/html/body/main/div/div/div[2]/div/div[2]/h1").text
+            
+            serie = {"titulo" : titulo, "temporada" : [], "capitulos" : []}
+
+            button = WebDriverWait(driver, espera_1).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "btn.select-trigger.text-white.bg-transparent.fs-16"))
+            )
+            
+            button.click()
+
+            menu_temporadas = WebDriverWait(driver, espera_1).until(
+                EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".btn.fs-15.block.text-white > span"))
+            )
+            
+            cant_temporadas = [x.text for x in menu_temporadas]
+            
+            button.click()
+            cont_1 = 1
+            
+            for temporada in cant_temporadas:
+                try:
+                    bloque_1 = season_click(driver, cont_1)
+                    
+                    if bloque_1 == True:
+                        capitulos_temporada = WebDriverWait(driver, espera_1).until(
+                            EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".episode-title.fs-16.fw-bold"))
+                        )
+                        capitulos_temporada = [x.text for x in capitulos_temporada]
+
+                        alm = {"capitulo" : [], "sinopsis" : [], "duracion_minutos" : []}
+                        
+                        cont_2 = 1
+
+                        for capitulo in capitulos_temporada:
+                            try:
+                                bloque_2 = capitulo_click(driver, cont_2)
+                                
+                                if bloque_2 == True:
+                                    
+                                    sinopsis = driver.find_element(By.XPATH, "/html/body/main/div/div/div[3]/div[2]/div[2]/div[3]/div/div[1]/p[2]").text
+                                    duracion = driver.find_element(By.XPATH, "/html/body/main/div/div/div[2]/div/div[2]/div/p/span[3]").text
+
+                                    # alm.append({"capitulo": capitulo, "sinopsis": sinopsis, "duracion_minutos": int(duracion.replace(" min",""))})
+                                    
+                                    alm["capitulo"].append(capitulo)
+                                    alm["sinopsis"].append(sinopsis)
+                                    alm["duracion_minutos"].append(int(duracion.replace(" min","")))
+                                    
+                                else:
+                                    break
+                                cont_2 += 1
+                                
+                            except (TimeoutException, NoSuchElementException) as e:
+                                print(f"No se pudo obtener información del capítulo {capitulo}: {e}")
+
+                        
+                        serie["temporada"].append(temporada)
+                        serie["capitulos"].append(alm)
+                    else:
+                        break
+                    cont_1 += 1
+                except TimeoutException as e:
+                    print(f"No se pudo obtener información de la temporada {temporada}: {e}")
+
+            driver.quit()
+
+            tiempo_total = time.time() - comienzo
+            print(f"Tiempo total: {tiempo_total} segundos")
+
+            # return serie
+
+            return serie["titulo"],serie["temporada"],serie["capitulos"]
+
+        except TimeoutException as e:
+            print(f"Se agotó el tiempo de espera: {e}")
+            if intento < intentos - 1:
+                print("Intentando nuevamente...")
+                continue
+            else:
+                print("Se alcanzó el número máximo de intentos.")
+                return None

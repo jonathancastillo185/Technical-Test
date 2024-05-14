@@ -3,20 +3,18 @@
 Paso a detallar los puntos de la prueba técnica:
 
     Objetivo:
-
         Obtener todas las películas y series. Obtener la metadata de cada contenido: título, año, sinopsis, link, duración (solo para movies).
         Guardar la información obtenida en una base de datos, en archivo .json o .csv automáticamente (dejar subido un ejemplo en el repositorio).
-        Imprimir el tiempo de ejecución en el script e indicarlo en el entregable de alguna manera.
+        Imprimir el tiempo de ejecución en el script e indicarlo en el entregable de alguna manera.[x]
 
     Plus:
-
-        Episodios de cada serie.
-        Metadata de los episodios.
-        Si es posible obtener mas información/metadata por cada contenido.
-        Identificar modelo de negocio. - el modelo es "modelo de subscripcion"
-        Tiempo de ejecución menor a 2hs.
-        Analisis y/o limpieza de Metadata.
-        Otros que consideren relevante.
+        Episodios de cada serie.[]
+        Metadata de los episodios.[]
+        Si es posible obtener mas información/metadata por cada contenido.[]
+        Identificar modelo de negocio. - el modelo es "modelo de subscripcion"[x]
+        Tiempo de ejecución menor a 2hs.[x]
+        Analisis y/o limpieza de Metadata.[]
+        Otros que consideren relevante.[]
 
     Sitio a realizar el scraping: https://filmzie.com/home
     	
