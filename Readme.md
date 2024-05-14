@@ -91,10 +91,10 @@ A continuacion se adjuntan 2 capturas de pantalla de como se visualiza la inform
 <center><h2>Video demostracion de ejecucion del Script</h2></center>
 
 <center>
-<video width="560" height="315" controls>
-  <source src="https://www.youtube.com/watch?v=dj9wanx66lE">
-  Tu navegador no soporta la reproducción de video.
-</video>
+
+[![Video Demo](https://img.youtube.com/vi/dj9wanx66lE/0.jpg)](https://www.youtube.com/watch?v=dj9wanx66lE)
+
 </center>
+
 
 
