@@ -53,7 +53,7 @@ El objetivo de esta prueba técnica es obtener todas las películas y series, in
 
 ## Resultados
 
-- El script produce dos bases de datos, una correspondiente a [películas](/Bases_datos/Peliculas.csv) y otra a [series](/Bases_datos/Peliculas.csv).
+- El script produce dos bases de datos principales, una correspondiente a [películas](/Bases_datos/Peliculas.csv) y otra a [series](/Bases_datos/Peliculas.csv), luego se utiliza la informacion de las mísmas para obtener mas información necesaría.
 - Se registra el tiempo de ejecución de cada ejecución del script en el archivo ["registro.txt"](/registro.txt) .
 - Se proporciona un [Jupyter Notebook](/Notebook/Scraping.ipynb) en la carpeta llamada Notebook con los pasos realizados y ejemplos de procesos para validar la veracidad de los resultados.
 - El script principal que orquesta la obtención y procesamiento de la información se encuentra en la carpeta script el archivo llamado ["Scraping.py"](/Script/Scraping.py). Las funciones utilizadas en el proceso ETL están almacenadas en la carpeta Functions el archivo llamado ["Function.py"](/Functions/function.py).
@@ -62,7 +62,7 @@ El objetivo de esta prueba técnica es obtener todas las películas y series, in
 
 ### Bases de datos:
 
-A continuacion se adjuntan 2 capturas de pantalla de como se visualiza la informacion extraida de ambos tipos.
+A continuacion se adjuntan capturas de pantalla de como se visualiza la informacion extraida de ambos tipos.
 
 <center><h2>Peliculas</h2></center>
 <center>
