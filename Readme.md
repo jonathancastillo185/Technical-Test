@@ -57,3 +57,8 @@ El objetivo de esta prueba técnica es obtener todas las películas y series, in
 - Se registra el tiempo de ejecución de cada ejecución del script en el archivo "registro.txt".
 - Se proporciona un notebook Jupyter en la carpeta "Notebook" con los pasos realizados y ejemplos de procesos para validar la veracidad de los resultados.
 - El script principal que orquesta la obtención y procesamiento de la información se encuentra en la carpeta "Script". Las funciones utilizadas en el proceso ETL están almacenadas en la carpeta "Functions".
+
+### Bases de datos:
+
+![Texto alternativo](images\Peliculas.png)
+
