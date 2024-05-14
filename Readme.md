@@ -75,7 +75,7 @@ A continuacion se adjuntan 2 capturas de pantalla de como se visualiza la inform
 
 <center><h2>Series</h2></center>
 <center>
-<img src="images\series.png" alt="Imagen de películas">
+<img src="images\Series_1.png" alt="Imagen de películas">
 </center>
 
 <center><h2>Series meta</h2></center>
@@ -95,6 +95,4 @@ A continuacion se adjuntan 2 capturas de pantalla de como se visualiza la inform
 [![Video Demo](https://img.youtube.com/vi/dj9wanx66lE/0.jpg)](https://www.youtube.com/watch?v=dj9wanx66lE)
 
 </center>
-
-
 
