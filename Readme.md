@@ -60,5 +60,4 @@ El objetivo de esta prueba técnica es obtener todas las películas y series, in
 
 ### Bases de datos:
 
-![Texto alternativo](images\Peliculas.png)
-
+![Alt text](/image/Peliculas.png)
