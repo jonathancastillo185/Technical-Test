@@ -92,7 +92,7 @@ A continuacion se adjuntan 2 capturas de pantalla de como se visualiza la inform
 
 <center>
 <video width="560" height="315" controls>
-  <source src="/video/demostracion.mkv" type="video/x-matroska">
+  <source src="https://www.youtube.com/watch?v=dj9wanx66lE" type="video/x-matroska">
   Tu navegador no soporta la reproducción de video.
 </video>
 <center>

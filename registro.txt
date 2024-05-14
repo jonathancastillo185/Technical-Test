@@ -37,4 +37,3 @@
 14/05/2024 17:12:43 - La extraccion total de informacion de cada serie tuvo una demora de 4.35 minutos
 14/05/2024 17:12:43 - El script completo tubo una demora de 12.39 minutos
 14/05/2024 17:12:43 - -------------------- Fin del script --------------------
-14/05/2024 17:21:51 - La extraccion total de informacion de cada serie tuvo una demora de 0.42 minutos
