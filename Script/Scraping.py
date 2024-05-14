@@ -14,14 +14,16 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
-from Functions.funciones import movies_for_category, categories, print_process, movies, series_informacion, desempaquetado, generador_dummies
+from Function.funciones import movies_for_category, categories, print_process, movies, series_informacion, desempaquetado, generador_dummies
 
 # -------------- Parametros --------------
-ruta_base = "../Bases_datos/"
+ruta_base = r'.\\Bases_datos\\'
 
 # ----------------------------------------
 
 print_process("Comienzo del Script 'Scraping'")
+
+comienzo_script = time.time()
 
 categorias = categories()
 
@@ -49,7 +51,7 @@ print_process(f"La extraccion total de las categorias tubo una demora de {round(
 
 peliculas_total = [x for x in peliculas_total if "/content/" in x]
 
-print_process("Comienzo del proceso de extraccion de informacion de cada iteracion")
+print_process("Comienzo del proceso de extraccion de informacion de cada iteracion (demora unos 6 minutos)")
 
 # Crear un diccionario para almacenar los resultados
 todo = {"titulo": [],"idioma" : [], "subtitulos" : [], "ano": [], "duracion_minutos": [], "categorias": [], "sinopsis": [], "tipo": [], "link": []}
@@ -75,7 +77,7 @@ print_process(f"El proceso de captura de la informacion de todo el contenido fue
 df = pd.DataFrame(todo)
 
 # Exportamos el total de la informacion
-df.to_csv(f"{ruta_base}Peliculas_Series_Completo_Respaldo.csv" , index=False)
+df.to_csv("{}Peliculas_Series_Completo_Respaldo.csv".format(ruta_base) , index=False)
 
 # Filtramos la informacion para separar las peliculas de series
 peliculas = df.loc[df["tipo"] == "Pelicula"].reset_index(drop=True)
@@ -87,13 +89,13 @@ peliculas.loc[peliculas["idioma"] == 'Non linguistic content', "idioma"] = "No c
 peliculas["subtitulos"] = peliculas["subtitulos"].fillna("No contiene subtitutlos")
 
 # Exportamos base de datos de Peliculas
-peliculas.to_csv(f"{ruta_base}Peliculas.csv",index=False)
+peliculas.to_csv("{}Peliculas.csv".format(ruta_base),index=False)
 
 # Generamos base de datos de peliculas con dummies para facilitar su etapa de analisis
 peliculas_dummies = generador_dummies(peliculas)
 
 # Exportamos base de datos de Peliculas con dummies
-peliculas_dummies.to_csv(f"{ruta_base}Peliculas_dummies.csv",index=False)
+peliculas_dummies.to_csv("{}Peliculas_dummies.csv".format(ruta_base),index=False)
 
 # Limpieza de series
 series.drop(columns=['duracion_minutos'], inplace=True)
@@ -101,7 +103,7 @@ series.loc[series["idioma"] == 'Non linguistic content', "idioma"] = "No contien
 series["subtitulos"] = series["subtitulos"].fillna("No contiene subtitulos")
 
 # Exportamos la base de datos de series
-series.to_csv(f"{ruta_base}series.csv",index=False)
+series.to_csv("{}series.csv".format(ruta_base),index=False)
 
 # Comenzamos con el proceso de captura de informacion de cada serie
 links_series = list(series["link"].values)
@@ -128,10 +130,15 @@ print_process(f"La extraccion total de informacion de cada serie tuvo una demora
 series_meta = pd.DataFrame(desempaquetado(resultados_dict))
 
 # Exportamos toda la informacion de series por separado
-series_meta.to_csv(f"{ruta_base}series_meta.csv", index=False)
+series_meta.to_csv("{}series_meta.csv".format(ruta_base), index=False)
 
 # Exportamos la base de datos de serie con un merge de toda la informacion obtenida
 series_todo = pd.merge(series,series_meta, on="titulo", how="inner")
-series_todo.to_csv(f"{ruta_base}series_completo.csv", index = False)
+
+series_todo.rename(columns={'sinopsis_y': 'sinopsis_capitulo'}, inplace=True)
+
+series_todo.to_csv("{}series_completo.csv".format(ruta_base), index = False)
+
+print_process(f"El script completo tubo una demora de {round((time.time()-comienzo_script),2)} minutos")
 
 print_process(fin=False)

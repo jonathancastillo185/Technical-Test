@@ -182,7 +182,7 @@ def movies_for_category(category):
             driver.quit()
             
             
-def search(soup, *arg , image = False):
+def search(soup, *arg):
     """
         Primero ingresar componente de bs4 a analizar.
         luego Ingresar los valores a buscar anidados.
@@ -192,28 +192,15 @@ def search(soup, *arg , image = False):
         segundo componente : "p/class"
         y asi sucesivamente.
     """
-    if image:
-        
-        alm = str(soup)
-        
-        pattern = re.compile(r'url("h(.*?)\-");')
-
-        match = pattern.search(alm)
-        
-        return match
-    
-    else:
-        
+    try:
         lista = [x.split("/") for x in arg]
-
         alm = soup
-        
         for x in lista:
-
             alm = alm.find(x[0], class_=x[1])
         
         return alm.text
-
+    except:
+        return None
 
 def movies(url):
     """
