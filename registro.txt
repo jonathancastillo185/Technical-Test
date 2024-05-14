@@ -1,61 +1,36 @@
-14/05/2024 13:58:18 - Comienzo del Script 'Scraping'
-14/05/2024 13:58:31 - Categorias capturadas correctamente.
-14/05/2024 13:58:31 - Categorias demoro 12.78 segundos
-14/05/2024 13:58:58 - Todo el contenido de la categoria 'history' fue capturado correctamente, demoro 21.06 segundos
-14/05/2024 13:58:59 - Todo el contenido de la categoria 'biography' fue capturado correctamente, demoro 21.26 segundos
-14/05/2024 13:59:00 - Todo el contenido de la categoria 'family' fue capturado correctamente, demoro 22.86 segundos
-14/05/2024 13:59:00 - Todo el contenido de la categoria 'fantasy' fue capturado correctamente, demoro 23.08 segundos
-14/05/2024 13:59:01 - Todo el contenido de la categoria 'crime' fue capturado correctamente, demoro 23.5 segundos
-14/05/2024 13:59:02 - Todo el contenido de la categoria 'animation' fue capturado correctamente, demoro 24.63 segundos
-14/05/2024 13:59:05 - Todo el contenido de la categoria 'action' fue capturado correctamente, demoro 27.2 segundos
-14/05/2024 13:59:10 - Todo el contenido de la categoria 'adventure' fue capturado correctamente, demoro 32.35 segundos
-14/05/2024 13:59:14 - Todo el contenido de la categoria 'horror' fue capturado correctamente, demoro 36.64 segundos
-14/05/2024 13:59:16 - Todo el contenido de la categoria 'musical' fue capturado correctamente, demoro 11.1 segundos
-14/05/2024 13:59:17 - Todo el contenido de la categoria 'news' fue capturado correctamente, demoro 10.76 segundos
-14/05/2024 13:59:20 - Todo el contenido de la categoria 'reality_tv' fue capturado correctamente, demoro 12.52 segundos
-14/05/2024 13:59:20 - Todo el contenido de la categoria 'music' fue capturado correctamente, demoro 15.12 segundos
-14/05/2024 13:59:23 - Todo el contenido de la categoria 'comedy' fue capturado correctamente, demoro 45.35 segundos
-14/05/2024 13:59:26 - Todo el contenido de la categoria 'mystery' fue capturado correctamente, demoro 19.73 segundos
-14/05/2024 13:59:30 - Todo el contenido de la categoria 'sci_fi' fue capturado correctamente, demoro 18.8 segundos
-14/05/2024 13:59:32 - Todo el contenido de la categoria 'romance' fue capturado correctamente, demoro 23.43 segundos
-14/05/2024 13:59:35 - Todo el contenido de la categoria 'documentary' fue capturado correctamente, demoro 57.59 segundos
-14/05/2024 13:59:36 - Todo el contenido de la categoria 'sport' fue capturado correctamente, demoro 16.2 segundos
-14/05/2024 13:59:38 - Todo el contenido de la categoria 'war' fue capturado correctamente, demoro 14.14 segundos
-14/05/2024 13:59:39 - Todo el contenido de la categoria 'western' fue capturado correctamente, demoro 13.07 segundos
-14/05/2024 13:59:49 - Todo el contenido de la categoria 'thriller' fue capturado correctamente, demoro 27.45 segundos
-14/05/2024 13:59:55 - Todo el contenido de la categoria 'drama' fue capturado correctamente, demoro 77.22 segundos
-14/05/2024 13:59:56 - Todo el contenido de la categoria 'european_production' fue capturado correctamente, demoro 29.9 segundos
-14/05/2024 14:00:02 - Todo el contenido de la categoria 'short' fue capturado correctamente, demoro 46.48 segundos
-14/05/2024 14:00:09 - La extraccion total de las categorias tubo una demora de 91.17 segundos
-14/05/2024 14:00:09 - Comienzo del proceso de extraccion de informacion de cada iteracion
-14/05/2024 14:06:30 - El proceso de captura de la informacion de todo el contenido fue exsitoso, y demoro 6.36 minutos
-14/05/2024 14:09:29 - Comienzo del Script 'Scraping'
-14/05/2024 14:09:39 - Categorias capturadas correctamente.
-14/05/2024 14:09:39 - Categorias demoro 9.8 segundos
-14/05/2024 14:10:08 - Todo el contenido de la categoria 'history' fue capturado correctamente, demoro 22.88 segundos
-14/05/2024 14:10:08 - Todo el contenido de la categoria 'biography' fue capturado correctamente, demoro 23.03 segundos
-14/05/2024 14:10:09 - Todo el contenido de la categoria 'crime' fue capturado correctamente, demoro 23.79 segundos
-14/05/2024 14:10:09 - Todo el contenido de la categoria 'family' fue capturado correctamente, demoro 23.94 segundos
-14/05/2024 14:10:10 - Todo el contenido de la categoria 'fantasy' fue capturado correctamente, demoro 24.82 segundos
-14/05/2024 14:10:11 - Todo el contenido de la categoria 'adventure' fue capturado correctamente, demoro 25.19 segundos
-14/05/2024 14:10:12 - Todo el contenido de la categoria 'animation' fue capturado correctamente, demoro 27.09 segundos
-14/05/2024 14:10:18 - Todo el contenido de la categoria 'action' fue capturado correctamente, demoro 33.02 segundos
-14/05/2024 14:10:23 - Todo el contenido de la categoria 'horror' fue capturado correctamente, demoro 38.03 segundos
-14/05/2024 14:10:25 - Todo el contenido de la categoria 'musical' fue capturado correctamente, demoro 10.27 segundos
-14/05/2024 14:10:26 - Todo el contenido de la categoria 'news' fue capturado correctamente, demoro 10.57 segundos
-14/05/2024 14:10:29 - Todo el contenido de la categoria 'reality_tv' fue capturado correctamente, demoro 12.43 segundos
-14/05/2024 14:10:29 - Todo el contenido de la categoria 'music' fue capturado correctamente, demoro 14.41 segundos
-14/05/2024 14:10:33 - Todo el contenido de la categoria 'comedy' fue capturado correctamente, demoro 47.27 segundos
-14/05/2024 14:10:34 - Todo el contenido de la categoria 'mystery' fue capturado correctamente, demoro 18.45 segundos
-14/05/2024 14:10:38 - Todo el contenido de la categoria 'sci_fi' fue capturado correctamente, demoro 19.37 segundos
-14/05/2024 14:10:45 - Todo el contenido de la categoria 'documentary' fue capturado correctamente, demoro 59.5 segundos
-14/05/2024 14:10:46 - Todo el contenido de la categoria 'war' fue capturado correctamente, demoro 14.21 segundos
-14/05/2024 14:10:47 - Todo el contenido de la categoria 'sport' fue capturado correctamente, demoro 17.7 segundos
-14/05/2024 14:10:48 - Todo el contenido de la categoria 'western' fue capturado correctamente, demoro 12.84 segundos
-14/05/2024 14:10:58 - Todo el contenido de la categoria 'thriller' fue capturado correctamente, demoro 27.06 segundos
-14/05/2024 14:10:59 - Todo el contenido de la categoria 'romance' fue capturado correctamente, demoro 41.78 segundos
-14/05/2024 14:11:05 - Todo el contenido de la categoria 'european_production' fue capturado correctamente, demoro 29.73 segundos
-14/05/2024 14:11:06 - Todo el contenido de la categoria 'drama' fue capturado correctamente, demoro 80.29 segundos
-14/05/2024 14:11:10 - Todo el contenido de la categoria 'short' fue capturado correctamente, demoro 45.96 segundos
-14/05/2024 14:11:17 - La extraccion total de las categorias tubo una demora de 91.26 segundos
-14/05/2024 14:11:17 - Comienzo del proceso de extraccion de informacion de cada iteracion (demora unos 6 minutos)
+14/05/2024 15:41:13 - Comienzo del Script 'Scraping'
+14/05/2024 15:41:24 - Categorias capturadas correctamente.
+14/05/2024 15:41:24 - Categorias demoro 11.59 segundos
+14/05/2024 15:41:53 - Todo el contenido de la categoria 'history' fue capturado correctamente, demoro 22.87 segundos
+14/05/2024 15:41:54 - Todo el contenido de la categoria 'biography' fue capturado correctamente, demoro 23.22 segundos
+14/05/2024 15:41:57 - Todo el contenido de la categoria 'animation' fue capturado correctamente, demoro 26.64 segundos
+14/05/2024 15:41:59 - Todo el contenido de la categoria 'fantasy' fue capturado correctamente, demoro 28.49 segundos
+14/05/2024 15:41:59 - Todo el contenido de la categoria 'family' fue capturado correctamente, demoro 28.87 segundos
+14/05/2024 15:42:00 - Todo el contenido de la categoria 'adventure' fue capturado correctamente, demoro 29.28 segundos
+14/05/2024 15:42:04 - Todo el contenido de la categoria 'action' fue capturado correctamente, demoro 32.99 segundos
+14/05/2024 15:42:14 - Todo el contenido de la categoria 'musical' fue capturado correctamente, demoro 13.8 segundos
+14/05/2024 15:42:15 - Todo el contenido de la categoria 'crime' fue capturado correctamente, demoro 44.13 segundos
+14/05/2024 15:42:15 - Todo el contenido de la categoria 'horror' fue capturado correctamente, demoro 44.29 segundos
+14/05/2024 15:42:18 - Todo el contenido de la categoria 'music' fue capturado correctamente, demoro 17.97 segundos
+14/05/2024 15:42:19 - Todo el contenido de la categoria 'reality_tv' fue capturado correctamente, demoro 13.17 segundos
+14/05/2024 15:42:19 - Todo el contenido de la categoria 'news' fue capturado correctamente, demoro 13.79 segundos
+14/05/2024 15:42:20 - Todo el contenido de la categoria 'comedy' fue capturado correctamente, demoro 49.0 segundos
+14/05/2024 15:42:32 - Todo el contenido de la categoria 'romance' fue capturado correctamente, demoro 26.2 segundos
+14/05/2024 15:42:33 - Todo el contenido de la categoria 'sci_fi' fue capturado correctamente, demoro 23.04 segundos
+14/05/2024 15:42:34 - Todo el contenido de la categoria 'mystery' fue capturado correctamente, demoro 30.54 segundos
+14/05/2024 15:42:36 - Todo el contenido de la categoria 'documentary' fue capturado correctamente, demoro 64.96 segundos
+14/05/2024 15:42:38 - Todo el contenido de la categoria 'war' fue capturado correctamente, demoro 14.38 segundos
+14/05/2024 15:42:39 - Todo el contenido de la categoria 'western' fue capturado correctamente, demoro 13.62 segundos
+14/05/2024 15:42:41 - Todo el contenido de la categoria 'sport' fue capturado correctamente, demoro 19.68 segundos
+14/05/2024 15:42:51 - Todo el contenido de la categoria 'thriller' fue capturado correctamente, demoro 29.97 segundos
+14/05/2024 15:42:54 - Todo el contenido de la categoria 'drama' fue capturado correctamente, demoro 83.17 segundos
+14/05/2024 15:42:58 - Todo el contenido de la categoria 'european_production' fue capturado correctamente, demoro 32.59 segundos
+14/05/2024 15:43:08 - Todo el contenido de la categoria 'short' fue capturado correctamente, demoro 48.22 segundos
+14/05/2024 15:43:15 - La extraccion total de las categorias tubo una demora de 104.07 segundos
+14/05/2024 15:43:15 - Comienzo del proceso de extraccion de informacion de cada iteracion (demora unos 6 minutos)
+14/05/2024 15:49:46 - El proceso de captura de la informacion de todo el contenido fue exsitoso, y demoro 6.52 minutos
+14/05/2024 15:49:46 - Base de datos Peliculas_Series_completo_Respaldo.csv se exporto correctamente
+14/05/2024 15:49:46 - Base de datos Peliculas.csv se exporto correctamente
+14/05/2024 15:49:46 - Base de datos Peliculas_dummies.csv se exporto correctamente
+14/05/2024 15:49:46 - Base de datos Series.csv se exporto correctamente
+14/05/2024 15:49:46 - Comenzamos extraccion de metadata series

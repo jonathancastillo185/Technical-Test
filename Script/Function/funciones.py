@@ -34,7 +34,7 @@ def inicio_driver():
     opts.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
     
     # En caso de querer ver el proceso con la ventana del navegador comentar la siguiente linea
-    opts.add_argument("--headless")
+    #opts.add_argument("--headless")
     
     driver = webdriver.Chrome(
     service=Service(ChromeDriverManager().install()),
@@ -336,7 +336,7 @@ def series_informacion(url):
     dict: Un diccionario con la información de la serie.
     """
     intentos = 3  # Número de intentos
-    espera_1 = 3  # Tiempo de espera máximo en segundos
+    espera_1 = 10  # Tiempo de espera máximo en segundos
     serie = {}   # Diccionario para almacenar la información de la serie
         
     try:
@@ -354,6 +354,10 @@ def series_informacion(url):
                 print(f"Error al cargar la página: {e}")
                 print("Intentando nuevamente...")
 
+        WebDriverWait(driver, espera).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "p.title"))
+            )
+        
         titulo = driver.find_element(By.XPATH, "/html/body/main/div/div/div[2]/div/div[2]/h1").text
         
         serie = {"titulo" : [], "temporada" : [], "capitulos" : [], "sinopsis" : [], "duracion_minutos" : []}
@@ -373,10 +377,12 @@ def series_informacion(url):
         button.click()
         cont_1 = 1
         
+        time.sleep(2)
+        
         for temporada in cant_temporadas:
             try:
                 bloque_1 = season_click(driver, cont_1)
-                
+                time.sleep(2)
                 if bloque_1 == True:
                     capitulos_temporada = WebDriverWait(driver, espera_1).until(
                         EC.visibility_of_all_elements_located((By.CSS_SELECTOR, ".episode-title.fs-16.fw-bold"))
