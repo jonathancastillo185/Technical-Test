@@ -65,27 +65,27 @@ A continuacion se adjuntan 2 capturas de pantalla de como se visualiza la inform
 
 <center><h2>Peliculas</h2></center>
 <center>
-<img src="/images/Peliculas.png" alt="Imagen de películas">
+<img src="images\Peliculas.png" alt="Imagen de películas">
 </center>
 
 <center><h2>Peliculas Dummies</h2></center>
 <center>
-<img src="/images/peliculas_dummies.png" alt="Imagen de películas">
+<img src="images\peliculas_dummies.png" alt="Imagen de películas">
 </center>
 
 <center><h2>Series</h2></center>
 <center>
-<img src="/images/series.png" alt="Imagen de películas">
+<img src="images\series.png" alt="Imagen de películas">
 </center>
 
 <center><h2>Series meta</h2></center>
 <center>
-<img src="/images/series_meta.png" alt="Imagen de películas">
+<img src="images\series_meta.png" alt="Imagen de películas">
 </center>
 
 <center><h2>Series completo</h2></center>
 <center>
-<img src="/images/series_completo.png" alt="Imagen de películas">
+<img src="images\series_completo.png" alt="Imagen de películas">
 </center>
 
 <center><h2>Video demostracion de ejecucion del Script</h2></center>
